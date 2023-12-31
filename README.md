@@ -1,9 +1,29 @@
-Ouvrir 2 terminaux:
-1 dans le dossier front et 1 dans le dossier back pour les lancer séparément.
 
-Faire npm install dans les 2 terminaux
+## Deployment
+Ouvrir 2 terminaux
 
-Faire un "npm run build" dans le back.
+To deploy this project run
 
-Faire "npm start" dans le terminal du dossier back
-Faire "npm start" dans le terminal du dossier front
+1 terminal dans le dossier back
+```bash
+  npm install
+```
+```bash
+  npm run build
+```
+```bash
+  npm start
+```
+1 terminal dans le dossier front
+
+```bash
+  npm install
+```
+```bash
+  npm start
+```
+To launch the tests dans le dossier back
+
+```bash
+  npm test
+```
