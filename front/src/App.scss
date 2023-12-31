@@ -17,9 +17,6 @@
 $color: white;
 $body-color: black;
 $color1: #566473;
-$color2: #16a085;
-$color3: #435a6b;
-$color4: red;
 
 @import url('https://fonts.googleapis.com/css?family=Raleway');
 
@@ -158,6 +155,7 @@ body {
     // Effect one
     &.type1::after,
     &.type1::before {
+      
       content: '';
       display: block;
       position: absolute;
@@ -169,6 +167,7 @@ body {
     }
 
     &.type1::after {
+      
       bottom: 0;
       right: 0;
       border-top-color: transparent;
@@ -188,6 +187,7 @@ body {
 
     &.type1:hover:after,
     &.type1:hover:before {
+      background-color: rgb(255,255,255,0.2);
       width: 100%;
       height: 100%;
     }

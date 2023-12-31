@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react';
 import ActionsList from './components/ActionsList';
 import Queue from './components/Queue';
 import Counter from './components/Counter';
+import AppHeader from './components/AppHeader';
 
 import './App.scss';
-import AppHeader from './components/AppHeader';
 
 // Définition des interfaces pour les actions et éléments de la file d'attente
 interface Action {
@@ -18,7 +18,7 @@ interface QueueItem {
 }
 
 // Initialisation des variables de temps pour les compteurs
-let backendtime = 90000;
+let backendtime = 900000;
 let frontendtime = 15000;
 
 function App() {
