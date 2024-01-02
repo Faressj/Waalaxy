@@ -31,7 +31,6 @@ app.get('/actions', (req, res) => { // Récup toutes les actions dans le fichier
 
 app.post('/update-action', (req, res) => { // Mets à jour les Actions pour décrementer
     const updatedAction = req.body as Action;
-    console.log(updatedAction);
     
     fs.readFile(path.join(__dirname, "..", 'actions.json'), 'utf8', (err, data) => {
         if (err) {
@@ -64,9 +63,9 @@ app.post('/update-action', (req, res) => { // Mets à jour les Actions pour déc
 export let updateInterval: NodeJS.Timeout;
 
 app.post('/init-update', (req, res) => { // Recalcul apres les 15 minutes
-    clearInterval(updateInterval);
+    // clearInterval(updateInterval);
     updateExecutionValues(); // Appel immédiat pour réinitialiser les valeurs
-    updateInterval = setInterval(updateExecutionValues, backendtime); // Réinitialiser l'intervalle
+    // updateInterval = setInterval(updateExecutionValues, backendtime); // Réinitialiser l'intervalle
     res.status(200).send('Intervalle de mise à jour réinitialisé');
 });
 

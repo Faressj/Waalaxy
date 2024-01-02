@@ -12,7 +12,7 @@ interface QueueProps {
 }
 
 const Queue: React.FC<QueueProps> = ({ queue, actionRemoving }) => {
-    return (
+        return (
         <div>
             <h2>Queue d'Actions</h2>
             <div className="queue-container">

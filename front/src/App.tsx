@@ -1,10 +1,19 @@
-import React, { useEffect, useState } from 'react';
+import { useState } from 'react';
 import ActionsList from './components/ActionsList';
 import Queue from './components/Queue';
 import Counter from './components/Counter';
 import AppHeader from './components/AppHeader';
 
+import { useFetchActions } from './hooks/useFetchActions'
+import { useSetLocal } from './hooks/useSetLocal';
+
+
 import './App.scss';
+import { useCounterFrontZero } from './hooks/useCounterFrontZero';
+import { useDecompteFront } from './hooks/useDecompteFront';
+import { useDecompteBack } from './hooks/useDecompteBack';
+import { useFrontLocal } from './hooks/useFrontLocal';
+import { useBackLocal } from './hooks/useBackLocal';
 
 // Définition des interfaces pour les actions et éléments de la file d'attente
 interface Action {
@@ -42,98 +51,26 @@ function App() {
   });
   const [actionRemoving, setActionRemoving] = useState<number | null>(null);  // État pour gérer l'action en cours de suppression
 
+  // Fetch Actions
+  useFetchActions(setActions);
 
-  useEffect(() => {  // useEffect pour la récupération des actions depuis le backend
-    fetch('http://localhost:3001/actions')
-      .then(response => response.json())
-      .then(data => setActions(data))
-      .catch(error => console.error('Erreur lors de la récupération des actions:', error));
-  }, []);
+  // useEf{fect pour sauvegarder la queue et intervalsStarted dans le localStorage
+  useSetLocal(queue, intervalsStarted);
 
-  useEffect(() => {  // useEffect pour sauvegarder la queue et intervalsStarted dans le localStorage
-    localStorage.setItem('queue', JSON.stringify(queue));
-    localStorage.setItem('intervalsStarted', JSON.stringify(intervalsStarted));
-  }, [queue, intervalsStarted]);
+  // useEffect pour gérer la logique de la queue et des compteurs
+  useCounterFrontZero(queue, actions, frontendCounter, setActionRemoving, setQueue, setActions, updateAction, setFrontendCounter, frontendtime);
 
-  useEffect(() => {  // useEffect pour gérer la logique de la queue et des compteurs
-    if (frontendCounter === 0) {
-      if (queue.length > 0) {
-        const actionToRemove = queue[0];
-        const currentAction = actions.find(action => action.nom === actionToRemove.name);
+  // useEffect pour le décompte du compteur frontend
+  useDecompteFront(frontendCounter, intervalsStarted, setFrontendCounter);
 
-        if (currentAction && currentAction.executionValue > 0) {
-          setActionRemoving(actionToRemove.id); // Déclencher l'animation
+  // useEffect pour le décompte du compteur backtend
+  useDecompteBack(backendCounter, intervalsStarted, setBackendCounter, backendtime);
 
-          setTimeout(() => {
-            setActionRemoving(null); // Fin de l'animation
-            setQueue(prevQueue => prevQueue.slice(1)); // Retirer l'action de la queue
-            setActions(prevActions => prevActions.map(action => {
-              if (action.nom === actionToRemove.name) {
-                return { ...action, executionValue: action.executionValue - 1 };
-              }
-              return action;
-            }));
-            updateAction({ ...currentAction, executionValue: currentAction.executionValue - 1 }); // Décrémente
-          }, 500); // Durée de l'animation
-        }
-      }
-      setFrontendCounter(frontendtime); // Réinitialiser le compteur
-    }
-  }, [queue, actions, frontendCounter]);
+  // useEffect pour sauvegarder le frontend dans le localStorage
+  useFrontLocal(frontendCounter, intervalsStarted);
 
-
-  useEffect(() => {  // useEffect pour le décompte du compteur frontend
-    if (intervalsStarted && frontendCounter !== null) {
-      const interval = setInterval(() => {
-        setFrontendCounter(prev => (prev !== null && prev > 0) ? prev - 1000 : prev);
-      }, 1000);
-
-      return () => clearInterval(interval);
-    }
-  }, [frontendCounter, intervalsStarted]);
-
-
-  useEffect(() => {  // useEffect pour le décompte du compteur backtend
-    if (intervalsStarted && backendCounter !== null) {
-      const interval = setInterval(() => {
-        const newBackendCounter = backendCounter - 1000;
-        setBackendCounter(newBackendCounter);
-
-        if (newBackendCounter <= 0) {
-          fetch('http://localhost:3001/init-update', {  // Appeler le endpoint pour déclencher le recalcul des valeurs d'exécution
-            method: 'POST'
-          }).then(response => {
-            if (!response.ok) {
-              throw new Error('Échec de la réinitialisation de l’intervalle du backend');
-            }
-            return response.text();
-          }).then(() => {
-            console.log("Recalcul des valeurs d'exécution déclenché");
-            setBackendCounter(backendtime);  // Réinitialiser le compteur pour les 15 prochaines minutes
-          }).catch(error => console.error('Erreur lors de la réinitialisation:', error));
-          window.location.reload();
-        }
-      }, 1000);
-
-      return () => clearInterval(interval);
-    }
-  }, [backendCounter, intervalsStarted]);
-
-  useEffect(() => {  // useEffect pour sauvegarder le frontend dans le localStorage
-    if (intervalsStarted) {
-      if (frontendCounter !== null) {
-        localStorage.setItem('frontendCounter', frontendCounter.toString());
-      }
-    }
-  }, [frontendCounter, intervalsStarted]);
-
-  useEffect(() => {  // useEffect pour sauvegarder le compteur backend dans le localStorage
-    if (intervalsStarted) {
-      if (backendCounter !== null) {
-        localStorage.setItem('backendCounter', backendCounter.toString());
-      }
-    }
-  }, [backendCounter, intervalsStarted]);
+  // useEffect pour sauvegarder le compteur backend dans le localStorage
+  useBackLocal(backendCounter, intervalsStarted);
 
   function addToQueue(actionName: string) {  // Fonctions pour gérer les actions et les intervalles
     if (intervalsStarted) {
@@ -154,7 +91,7 @@ function App() {
     })
       .then(response => {
         if (!response.ok) {
-          throw new Error("Échec de la mise à jour de l\'action");
+          throw new Error("Échec de la mise à jour de l'action");
         }
         return response.text();
       })
