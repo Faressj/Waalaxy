@@ -10,10 +10,10 @@ Faire "npm start" dans le terminal du dossier front
 
 # **Update v.1.0.1**
 
-##Front :
+## Front :
 - Moved every hooks (useEffet) in the folder hook
 - Removed Unused Dependencies
 - Syntax in log
 
-##Back :
+## Back :
 Removed setinterval in backend that updated value itself
