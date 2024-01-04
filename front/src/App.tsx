@@ -51,6 +51,8 @@ function App() {
   });
   const [actionRemoving, setActionRemoving] = useState<number | null>(null);  // État pour gérer l'action en cours de suppression
 
+  const [toggle, setToggle] = useState<boolean>(true);
+
   // Fetch Actions
   useFetchActions(setActions);
 
@@ -58,7 +60,7 @@ function App() {
   useSetLocal(queue, intervalsStarted);
 
   // useEffect pour gérer la logique de la queue et des compteurs
-  useCounterFrontZero(queue, actions, frontendCounter, setActionRemoving, setQueue, setActions, updateAction, setFrontendCounter, frontendtime);
+  useCounterFrontZero(queue, actions, frontendCounter, setActionRemoving, setQueue, setActions, updateAction, setFrontendCounter, frontendtime, toggle);
 
   // useEffect pour le décompte du compteur frontend
   useDecompteFront(frontendCounter, intervalsStarted, setFrontendCounter);
@@ -121,6 +123,9 @@ function App() {
     window.location.reload();
   }
 
+  function handleToggle(){
+    setToggle(!toggle)    
+  }
 
   function resetApp() {  // Réinitialiser l'application
     setQueue([]);// Vider la queue
@@ -134,7 +139,7 @@ function App() {
   }
   return ( // Rendu du composant
     <div className="App">
-      <AppHeader actions={actions} onRecalculate={initiateBackendInterval} onReset={resetApp} />
+      <AppHeader actions={actions} onRecalculate={initiateBackendInterval} onReset={resetApp} onToggle={handleToggle} />
 
       <ActionsList actions={actions} onAddToQueue={addToQueue} />
 
