@@ -6,7 +6,7 @@ export const useCounterFrontZero = (queue: any, actions: any, frontendCounter: n
         if (frontendCounter === 0) {
             if (queue.length > 0) {
                 let actionToRemove: any;
-                if (toggle == true) {
+                if (toggle === true) {
                     actionToRemove = queue[0];
                 } else {
                     actionToRemove = queue[queue.length - 1];
@@ -19,7 +19,7 @@ export const useCounterFrontZero = (queue: any, actions: any, frontendCounter: n
                     setTimeout(() => {
                         setActionRemoving(null); // Fin de l'animation
 
-                        if (toggle == true) {
+                        if (toggle === true) {
                             setQueue((prevQueue: string | any[]) => prevQueue.slice(1)); // Retirer l'action de la queue
                         } else {
                             setQueue((prevQueue: string | any[]) => prevQueue.slice(0, queue.length - 1)); // Retirer l'action de la queue

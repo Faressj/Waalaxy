@@ -31,7 +31,7 @@ app.get('/actions', (req, res) => { // Récup toutes les actions dans le fichier
 
 app.post('/update-action', (req, res) => { // Mets à jour les Actions pour décrementer
     const updatedAction = req.body as Action;
-    
+
     fs.readFile(path.join(__dirname, "..", 'actions.json'), 'utf8', (err, data) => {
         if (err) {
             res.status(500).send('Erreur lors de la lecture du fichier actions.json');
@@ -67,6 +67,31 @@ app.post('/init-update', (req, res) => { // Recalcul apres les 15 minutes
     updateExecutionValues(); // Appel immédiat pour réinitialiser les valeurs
     // updateInterval = setInterval(updateExecutionValues, backendtime); // Réinitialiser l'intervalle
     res.status(200).send('Intervalle de mise à jour réinitialisé');
+});
+
+app.post('/add-action', (req, res) => {
+    const newAction = req.body;
+
+    fs.readFile(path.join(__dirname, "..", 'actions.json'), 'utf8', (err, data) => {
+        if (err) {
+            res.status(500).send('Erreur lors de la lecture du fichier actions.json');
+            return;
+        }
+
+        try {
+            let actions = JSON.parse(data);
+            actions.push(newAction);
+            fs.writeFile(path.join(__dirname, "..", 'actions.json'), JSON.stringify(actions, null, 2), 'utf8', writeErr => {
+                if (writeErr) {
+                    res.status(500).send('Erreur lors de l’écriture dans le fichier actions.json');
+                    return;
+                }
+                res.status(200).send('Nouvelle action ajoutée avec succès');
+            });
+        } catch (parseError) {
+            res.status(500).send('Erreur lors de l’analyse du fichier actions.json');
+        }
+    });
 });
 
 

@@ -3,6 +3,7 @@ import ActionsList from './components/ActionsList';
 import Queue from './components/Queue';
 import Counter from './components/Counter';
 import AppHeader from './components/AppHeader';
+import Form from './components/Form';
 
 import { useFetchActions } from './hooks/useFetchActions'
 import { useSetLocal } from './hooks/useSetLocal';
@@ -45,7 +46,7 @@ function App() {
     const saved = localStorage.getItem('frontendCounter');
     return saved ? parseInt(saved) : null;
   });
-  const [intervalsStarted, setIntervalsStarted] = useState(() => {  // État pour savoir si les intervalles ont été démarrés
+  const [intervalsStarted, setIntervalsStarted] = useState<boolean>(() => {  // État pour savoir si les intervalles ont été démarrés
     const saved = localStorage.getItem('intervalsStarted');
     return saved ? JSON.parse(saved) : false;
   });
@@ -81,7 +82,6 @@ function App() {
       alert("Veuillez d'abord Lancer un Recalcul Manuel !");
     }
   }
-
 
   function updateAction(action: Action) { // Mettre à jour une action dans le backend
     fetch('http://localhost:3001/update-action', {
@@ -123,8 +123,8 @@ function App() {
     window.location.reload();
   }
 
-  function handleToggle(){
-    setToggle(!toggle)    
+  function handleToggle() {
+    setToggle(!toggle)
   }
 
   function resetApp() {  // Réinitialiser l'application
@@ -140,6 +140,8 @@ function App() {
   return ( // Rendu du composant
     <div className="App">
       <AppHeader actions={actions} onRecalculate={initiateBackendInterval} onReset={resetApp} onToggle={handleToggle} />
+
+      <Form actions={actions} isDisabled={intervalsStarted} />
 
       <ActionsList actions={actions} onAddToQueue={addToQueue} />
 
