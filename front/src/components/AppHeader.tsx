@@ -1,19 +1,12 @@
-import React from 'react';
-import ToolButtons from './ToolButtons';
-interface Action {
-  nom: string;
-  maxValue: number;
-}
-
-interface AppHeaderProps {
-  actions: Action[];
-  onRecalculate: () => void;
-  onReset: () => void;
-  onToggle: () => void;
-}
-
-
-function AppHeader({ actions, onRecalculate, onReset, onToggle }: AppHeaderProps) {
+import ToolButtons from "./ToolButtons";
+import { AppHeaderProps } from "../Types/types";
+import "../styles/AppHeader.scss";
+function AppHeader({
+  actions,
+  onRecalculate,
+  onReset,
+  onToggle,
+}: AppHeaderProps) {
   return (
     <header className="App-header">
       <ToolButtons onRecalculate={onRecalculate} onReset={onReset} />
@@ -23,15 +16,14 @@ function AppHeader({ actions, onRecalculate, onReset, onToggle }: AppHeaderProps
           <label></label>
         </div>
       </section>
-      <ul className='header-actions'>
-        {actions.map(action => (
-          <li key={action.nom}>
-            Action: {action.nom}, Max Value: {action.maxValue}
+      <ul className="header-actions">
+        {actions.map((action) => (
+          <li key={action.name}>
+            Action: {action.name}, Max Value: {action.maxValue}
           </li>
         ))}
       </ul>
     </header>
-
   );
 }
 

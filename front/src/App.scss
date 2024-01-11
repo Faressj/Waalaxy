@@ -1,24 +1,6 @@
-.queue-item {
-  margin: 5px;
-  padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  background-color: #f9f9f9;
-  transition: all 0.5s ease-out;
-  color: black;
-}
-
-.fade-out {
-  opacity: 0;
-  transform: translateX(-100%);
-}
-
-// Variables
-$color: white;
-$body-color: black;
 $color1: #566473;
 
-@import url('https://fonts.googleapis.com/css?family=Raleway');
+@import url("https://fonts.googleapis.com/css?family=Raleway");
 
 body {
   color: white;
@@ -31,329 +13,16 @@ body {
   align-items: center;
   flex-direction: column;
   font-family: Raleway;
-  background-color: $body-color;
+  background-color: black;
 
   #root {
     .App {
       text-align: center;
-
-      .App-header {
-        text-align: center;
-        width: 100%;
-        display: flex;
-        top: 0;
-        left: 0;
-        position: absolute;
-
-        .tools-button {
-          width: 50%;
-          margin: 3%;
-          display: flex;
-
-          .tooltip {
-            position: relative;
-            display: inline-block;
-
-            &:hover .tooltiptext {
-              visibility: visible;
-              opacity: 1;
-            }
-
-            .tooltiptext {
-              visibility: hidden;
-              opacity: 0;
-              transition: opacity 0.5s ease-in-out, visibility 0.3s ease-in-out;
-              width: 200px;
-              background-color: white;
-              color: black;
-              text-align: center;
-              padding: 5px 0;
-              border-radius: 6px;
-              position: absolute;
-              z-index: 1;
-              top: 100px;
-              left: 50%;
-              margin-left: -100px;
-              overflow: auto;
-              max-height: 100px;
-
-              &:after {
-                content: "";
-                position: absolute;
-                top: 100%;
-                left: 50%;
-                margin-left: -5px;
-                border-width: 5px;
-                border-style: solid;
-                border-color: black transparent transparent transparent;
-              }
-
-            }
-
-          }
-
-        }
-
-        // Toggle
-        section {
-          float: left;
-          min-width: 150px;
-          width: 33.33%;
-          padding: 25px 0;
-          min-height: 100px;
-        }
-
-        .checkbox {
-          position: relative;
-          display: inline-block;
-
-          &:after,
-          &:before {
-            font-family: FontAwesome;
-            font-feature-settings: normal;
-            font-kerning: auto;
-            font-language-override: normal;
-            font-stretch: normal;
-            font-style: normal;
-            font-synthesis: weight style;
-            font-variant: normal;
-            font-weight: normal;
-            text-rendering: auto;
-          }
-
-          label {
-            width: 90px;
-            height: 42px;
-            background: #ccc;
-            position: relative;
-            display: inline-block;
-            border-radius: 46px;
-            transition: .4s;
-
-            &:after {
-              content: '';
-              position: absolute;
-              width: 50px;
-              height: 50px;
-              border-radius: 100%;
-              left: 0;
-              top: -5px;
-              z-index: 2;
-              background: #fff;
-              box-shadow: 0 0 5px rgba(0, 0, 0, .2);
-              transition: .4s;
-            }
-          }
-
-          input {
-            position: absolute;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 5;
-            opacity: 0;
-            cursor: pointer;
-
-            &:hover+label:after {
-              box-shadow: 0 2px 15px 0 rgba(0, 0, 0, .2), 0 3px 8px 0 rgba(0, 0, 0, .15);
-            }
-
-            &:checked+label {
-              &:after {
-                left: 40px;
-              }
-            }
-          }
-        }
-
-        .model-12 {
-          .checkbox {
-            background: #2B2B2D;
-            height: 40px;
-            width: 160px;
-            border-radius: 50px;
-
-            &:after,
-            &:before {
-              content: 'FILO';
-              font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
-              line-height: 40px;
-              font-size: 12px;
-            }
-
-            &:before {
-              content: 'FIFO';
-              z-index: 1;
-            }
-
-            label {
-              background: #1E1E1E;
-              height: 10px;
-              width: 70px;
-              margin: 0 5px;
-              box-shadow: 0 0 2px 2px rgba(0, 0, 0, .3) inset;
-
-              &:after {
-                background-color: #3F4545;
-                background-image: linear-gradient(top, #666 0%, #3F4545 100%);
-                top: -9px;
-                width: 27px;
-                height: 27px;
-              }
-
-              &:before {
-                content: '';
-                position: absolute;
-                width: 14px;
-                height: 14px;
-                border-radius: 100%;
-                transition: .4s;
-                background: #151515;
-                z-index: 3;
-                left: 7px;
-                top: -2px;
-              }
-            }
-
-            input:checked+label {
-              &:after {
-                left: 45px;
-              }
-
-              &:before {
-                background: #94DA00;
-                box-shadow: 0 0 5px #94DA00;
-                left: 52px;
-              }
-            }
-          }
-        }
-
-        .header-actions {
-          justify-content: center;
-          border: solid white;
-          margin: 0;
-          padding: 3%;
-          display: grid;
-          list-style: none;
-          white-space: nowrap;
-        }
-      }
-
-      #formcreate {
-        display: inline-grid;
-
-        input {
-          border-radius: 50px;
-          text-align: center;
-        }
-
-        .button-86 {
-          all: unset;
-          width: 50%;
-          margin: auto;
-          height: 30px;
-          font-size: 16px;
-          background: transparent;
-          border: none;
-          position: relative;
-          color: #f0f0f0;
-          cursor: pointer;
-          z-index: 1;
-          padding: 5px 10px;
-          margin-top: 10px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          white-space: nowrap;
-          user-select: none;
-          -webkit-user-select: none;
-          touch-action: manipulation;
-        }
-
-        .button-86::after,
-        .button-86::before {
-          content: '';
-          position: absolute;
-          bottom: 0;
-          right: 0;
-          z-index: -99999;
-          transition: all .4s;
-        }
-
-        .button-86::before {
-          transform: translate(0%, 0%);
-          width: 100%;
-          height: 100%;
-          background: #28282d;
-          border-radius: 10px;
-        }
-
-        .button-86::after {
-          transform: translate(10px, 10px);
-          width: 35px;
-          height: 35px;
-          background: #ffffff15;
-          backdrop-filter: blur(5px);
-          -webkit-backdrop-filter: blur(5px);
-          border-radius: 50px;
-        }
-
-        .button-86:hover::before {
-          transform: translate(5%, 20%);
-          width: 110%;
-          height: 110%;
-        }
-
-        .button-86:hover::after {
-          border-radius: 10px;
-          transform: translate(0, 0);
-          width: 100%;
-          height: 100%;
-        }
-
-        .button-86:active::after {
-          transition: 0s;
-          transform: translate(0, 5%);
-        }
-      }
-
-      .list-actions-container {
-        gap: 2em;
-
-        h1 {}
-
-        .list-actions {
-          display: flex;
-          list-style: none;
-          padding: 0;
-          justify-content: center;
-
-          .one-action {
-            display: grid;
-          }
-        }
-      }
-
-      .queue-container {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: flex-start;
-        align-items: center;
-        padding: 10px;
-      }
-
-      .chrono-back {}
-
-      .chrono-front {}
     }
   }
-
 }
 
 .button {
-  // Button component
   position: relative;
   padding: 1em 1.5em;
   border: none;
@@ -366,11 +35,9 @@ body {
   &.type1 {
     color: $color1;
 
-    // Effect one
     &.type1::after,
     &.type1::before {
-
-      content: '';
+      content: "";
       display: block;
       position: absolute;
       width: 20%;
@@ -381,7 +48,6 @@ body {
     }
 
     &.type1::after {
-
       bottom: 0;
       right: 0;
       border-top-color: transparent;

@@ -1,0 +1,14 @@
+.list-actions-container {
+  gap: 2em;
+
+  .list-actions {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    justify-content: center;
+
+    .one-action {
+      display: grid;
+    }
+  }
+}

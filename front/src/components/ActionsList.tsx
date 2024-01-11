@@ -1,24 +1,25 @@
-import React from 'react';
+import React from "react";
+import { ActionsListProps } from "../Types/types";
+import "../styles/ActionsList.scss";
 
-interface Action {
-  nom: string;
-  maxValue: number;
-  executionValue: number;
-}
-
-interface ActionsListProps {
-  actions: Action[];
-  onAddToQueue: (actionName: string) => void;
-}
-
-const ActionsList: React.FC<ActionsListProps> = ({ actions, onAddToQueue }) => {
+const ActionsList: React.FC<ActionsListProps> = ({
+  actions,
+  onAddToQueue,
+  setActions,
+}) => {
   return (
-    <div className='list-actions-container'>
+    <div className="list-actions-container">
       <h1>Liste des Actions</h1>
-      <ul className='list-actions'>
-        {actions.map(action => (
-          <li className='one-action' key={action.nom}>
-            <button className ="button type1"onClick={() => onAddToQueue(action.nom)}>{action.nom}</button>  {action.executionValue} Crédits
+      <ul className="list-actions">
+        {actions.map((action) => (
+          <li className="one-action" key={action.name}>
+            <button
+              className="button type1"
+              onClick={() => onAddToQueue(action.name)}
+            >
+              {action.name}
+            </button>{" "}
+            {action.executionValue} Crédits
           </li>
         ))}
       </ul>

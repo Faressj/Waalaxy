@@ -1,6 +1,6 @@
 interface Action {
   id: string;
-  nom: string;
+  name: string;
   maxValue: number;
   executionValue: number;
   createdAt: Date;

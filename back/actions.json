@@ -1,17 +1,22 @@
 [
   {
-    "nom": "A",
-    "maxValue": 100,
-    "executionValue": 92
-  },
-  {
-    "nom": "B",
+    "name": "A",
     "maxValue": 15,
     "executionValue": 14
   },
   {
-    "nom": "C",
+    "name": "B",
+    "maxValue": 15,
+    "executionValue": 14
+  },
+  {
+    "name": "C",
     "maxValue": 10,
     "executionValue": 9
+  },
+  {
+    "name": "D",
+    "maxValue": 45,
+    "executionValue": 41
   }
 ]
